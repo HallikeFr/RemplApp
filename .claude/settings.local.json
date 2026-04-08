@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Read(//c/Users/timot/Claude Code/**)",
+      "Bash(npx create-next-app@latest remplapp-temp --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npx create-next-app@latest remplapp-temp2 --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(find \"C:/Users/timot/Claude Code/RemplApp/\" -mindepth 1 -maxdepth 1 -not -name '.claude' -exec rm -rf {} +)",
+      "Bash(cp -r \"C:/Users/timot/Claude Code/remplapp-temp2/.\" \"C:/Users/timot/Claude Code/RemplApp/\")",
+      "Bash(rm -rf \"C:/Users/timot/Claude Code/remplapp-temp2\")",
+      "Bash(npx create-next-app@latest temp-init --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
