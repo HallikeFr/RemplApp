@@ -28,22 +28,27 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
-      },
-    });
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
 
-    if (error) {
-      setError("Erreur lors de l'inscription. Cet email est peut-être déjà utilisé.");
+      if (error) {
+        setError(`Erreur : ${error.message}`);
+        setLoading(false);
+        return;
+      }
+
+      setSuccess(true);
+    } catch (err) {
+      setError(`Erreur inattendue : ${err instanceof Error ? err.message : String(err)}`);
       setLoading(false);
-      return;
     }
-
-    setSuccess(true);
   }
 
   if (success) {
