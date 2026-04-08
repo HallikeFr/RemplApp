@@ -18,6 +18,7 @@ export function ProfilForm() {
   const { profile, loading, save } = useProfile(user?.id ?? null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [deletingAccount, setDeletingAccount] = useState(false);
 
   // Champs du formulaire
   const [situationFamiliale, setSituationFamiliale] = useState<SituationFamiliale>('celibataire');
@@ -72,6 +73,27 @@ export function ProfilForm() {
     await supabase.auth.signOut();
     router.push('/login');
     router.refresh();
+  }
+
+  async function handleDeleteAccount() {
+    const confirmed = confirm(
+      'Supprimer définitivement votre compte et toutes vos données (vacations, structures, profil) ?\n\nCette action est irréversible et conforme au droit à l\'effacement RGPD.'
+    );
+    if (!confirmed) return;
+
+    setDeletingAccount(true);
+    try {
+      const res = await fetch('/api/account/delete', { method: 'DELETE' });
+      if (!res.ok) throw new Error('Erreur serveur');
+      // Déconnexion locale puis redirection
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      router.push('/');
+      router.refresh();
+    } catch {
+      alert('Erreur lors de la suppression du compte. Veuillez réessayer.');
+      setDeletingAccount(false);
+    }
   }
 
   return (
@@ -211,17 +233,32 @@ export function ProfilForm() {
           {saved ? '✓ Enregistré' : 'Enregistrer'}
         </Button>
 
-        <div className="pt-4 border-t border-[var(--color-border)]">
-          <p className="text-sm font-medium text-[var(--color-text)] mb-1">
-            {user?.email}
-          </p>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="text-sm text-[var(--color-danger)] hover:underline"
-          >
-            Se déconnecter
-          </button>
+        <div className="pt-4 border-t border-[var(--color-border)] space-y-3">
+          <div>
+            <p className="text-sm font-medium text-[var(--color-text)] mb-1">{user?.email}</p>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-sm text-[var(--color-danger)] hover:underline"
+            >
+              Se déconnecter
+            </button>
+          </div>
+
+          {/* RGPD — Suppression compte */}
+          <div className="pt-3 border-t border-[var(--color-border)]">
+            <p className="text-xs text-[var(--color-text-muted)] mb-2">
+              Droit à l'effacement (RGPD) — toutes vos données seront supprimées.
+            </p>
+            <button
+              type="button"
+              onClick={handleDeleteAccount}
+              disabled={deletingAccount}
+              className="text-xs text-[var(--color-text-light)] hover:text-[var(--color-danger)] hover:underline disabled:opacity-50 transition-colors"
+            >
+              {deletingAccount ? 'Suppression...' : 'Supprimer mon compte et mes données'}
+            </button>
+          </div>
         </div>
       </div>
     </form>

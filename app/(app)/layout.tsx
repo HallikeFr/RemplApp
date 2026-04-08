@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { BottomNavbar, Sidebar } from '@/components/layout/Navbar';
+import { SyncBanner } from '@/components/layout/SyncBanner';
 
 export default async function AppLayout({
   children,
@@ -18,6 +19,9 @@ export default async function AppLayout({
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-subtle)]">
+      {/* Bannière offline/sync */}
+      <SyncBanner />
+
       {/* Sidebar desktop */}
       <Sidebar />
 

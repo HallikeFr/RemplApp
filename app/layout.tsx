@@ -5,6 +5,16 @@ export const metadata: Metadata = {
   title: 'RemplApp — Gestion des remplacements libéraux',
   description:
     'Application de gestion des vacations et simulation fiscale pour les internes en radiologie.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'RemplApp',
+  },
+  icons: {
+    icon: '/icons/icon-192.png',
+    apple: '/icons/apple-touch-icon.png',
+  },
 };
 
 export const viewport: Viewport = {
@@ -12,6 +22,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  themeColor: '#1B4332',
 };
 
 export default function RootLayout({

@@ -61,3 +61,32 @@ body {
   background: var(--color-border);
   border-radius: 2px;
 }
+
+/* Safe area insets pour iPhone avec encoche */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Tap highlight transparent sur mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Focus visible accessible */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Amélioration taille cible tactile minimum (WCAG 2.5.5) */
+button, a, [role="button"] {
+  min-height: 44px;
+}
+
+/* Override pour les petits boutons dans les listes */
+.btn-compact {
+  min-height: unset;
+}

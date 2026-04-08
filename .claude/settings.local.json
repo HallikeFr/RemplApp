@@ -11,7 +11,10 @@
       "Bash(npx create-next-app@latest temp-init --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
       "Bash(npm install:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(pip install:*)",
+      "Bash(python -c \"from PIL import Image; print\\('ok'\\)\")",
+      "Bash(python -c ':*)"
     ]
   }
 }
